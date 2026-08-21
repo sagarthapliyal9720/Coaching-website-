@@ -1,0 +1,253 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-6">
+    
+    <!-- Top Bar: Title & Timer -->
+    <div class="sticky top-20 z-40 bg-ksCard border border-ksBorder text-white p-4 rounded-xl shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div>
+            <h1 class="font-bold text-lg sm:text-xl text-white">{{ test.title }}</h1>
+            <p class="text-xs text-slate-400 mt-1">
+                Total Questions: <span class="text-white font-medium">{{ questions.count }}</span> 
+                • Total Marks: <span class="text-white font-medium">{{ test.total_marks }}</span>
+            </p>
+        </div>
+        
+        <div class="bg-red-600/20 border border-red-500/40 px-5 py-2.5 rounded-xl text-center flex items-center gap-3">
+            <i class="fa-regular fa-clock text-xl text-red-400"></i>
+            <div>
+                <span class="text-[10px] uppercase text-red-300 font-semibold block leading-tight">Time Left</span>
+                <span id="timer" class="text-xl sm:text-2xl font-black tracking-wider text-white">00:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Exam Body Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+        
+        <!-- Left Side: Active Question Display -->
+        <div class="lg:col-span-3">
+            <form id="examForm" method="POST" action="{% url 'take_test' test.id %}">
+                {% csrf_token %}
+
+                {% for q in questions %}
+                <div id="question-card-{{ forloop.counter }}" 
+                     class="question-card bg-ksCard p-6 sm:p-8 rounded-2xl border border-ksBorder shadow-sm {% if not forloop.first %}hidden{% endif %}">
+                    
+                    <!-- Question Header -->
+                    <div class="flex items-center justify-between pb-4 border-b border-ksBorder mb-5">
+                        <span class="text-xs font-bold bg-ksGold/15 text-ksGold px-3 py-1.5 rounded-full uppercase tracking-wide">
+                            Question {{ forloop.counter }} of {{ questions.count }}
+                        </span>
+                        <span class="text-xs bg-ksDark text-slate-300 font-bold px-3 py-1.5 rounded-lg border border-ksBorder">
+                            +{{ q.marks }} Mark(s)
+                        </span>
+                    </div>
+
+                    <!-- Question Text -->
+                    <h2 class="text-lg sm:text-xl font-bold text-white mb-7 leading-relaxed">
+                        {{ q.question_text }}
+                    </h2>
+
+                    <!-- Options List -->
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-4 p-4 rounded-xl border border-ksBorder bg-ksDark hover:border-ksGold/50 hover:bg-ksGold/5 cursor-pointer transition-all group">
+                            <input type="radio" name="question_{{ q.id }}" value="A" data-qindex="{{ forloop.counter }}" 
+                                   onchange="markAttempted({{ forloop.counter }})" 
+                                   class="w-5 h-5 text-ksGold bg-ksCard border-ksBorder focus:ring-ksGold focus:ring-offset-0">
+                            <span class="text-sm font-medium text-slate-300 group-hover:text-white transition">A) {{ q.option_a }}</span>
+                        </label>
+
+                        <label class="flex items-center gap-4 p-4 rounded-xl border border-ksBorder bg-ksDark hover:border-ksGold/50 hover:bg-ksGold/5 cursor-pointer transition-all group">
+                            <input type="radio" name="question_{{ q.id }}" value="B" data-qindex="{{ forloop.counter }}" 
+                                   onchange="markAttempted({{ forloop.counter }})" 
+                                   class="w-5 h-5 text-ksGold bg-ksCard border-ksBorder focus:ring-ksGold focus:ring-offset-0">
+                            <span class="text-sm font-medium text-slate-300 group-hover:text-white transition">B) {{ q.option_b }}</span>
+                        </label>
+
+                        <label class="flex items-center gap-4 p-4 rounded-xl border border-ksBorder bg-ksDark hover:border-ksGold/50 hover:bg-ksGold/5 cursor-pointer transition-all group">
+                            <input type="radio" name="question_{{ q.id }}" value="C" data-qindex="{{ forloop.counter }}" 
+                                   onchange="markAttempted({{ forloop.counter }})" 
+                                   class="w-5 h-5 text-ksGold bg-ksCard border-ksBorder focus:ring-ksGold focus:ring-offset-0">
+                            <span class="text-sm font-medium text-slate-300 group-hover:text-white transition">C) {{ q.option_c }}</span>
+                        </label>
+
+                        <label class="flex items-center gap-4 p-4 rounded-xl border border-ksBorder bg-ksDark hover:border-ksGold/50 hover:bg-ksGold/5 cursor-pointer transition-all group">
+                            <input type="radio" name="question_{{ q.id }}" value="D" data-qindex="{{ forloop.counter }}" 
+                                   onchange="markAttempted({{ forloop.counter }})" 
+                                   class="w-5 h-5 text-ksGold bg-ksCard border-ksBorder focus:ring-ksGold focus:ring-offset-0">
+                            <span class="text-sm font-medium text-slate-300 group-hover:text-white transition">D) {{ q.option_d }}</span>
+                        </label>
+                    </div>
+
+                    <!-- Navigation Controls -->
+                    <div class="flex items-center justify-between mt-8 pt-5 border-t border-ksBorder">
+                        <button type="button" onclick="clearSelection('question_{{ q.id }}', {{ forloop.counter }})" 
+                                class="text-xs text-red-400 font-semibold hover:text-red-300 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate-left"></i> Clear Response
+                        </button>
+
+                        <div class="flex gap-3">
+                            {% if not forloop.first %}
+                            <button type="button" onclick="showQuestion({{ forloop.counter|add:'-1' }})" 
+                                    class="px-5 py-2.5 bg-ksDark border border-ksBorder text-slate-300 text-sm font-bold rounded-xl hover:border-ksGold/50 hover:text-white transition">
+                                ← Previous
+                            </button>
+                            {% endif %}
+
+                            {% if not forloop.last %}
+                            <button type="button" onclick="showQuestion({{ forloop.counter|add:'1' }})" 
+                                    class="px-6 py-2.5 gold-gradient text-ksDark text-sm font-bold rounded-xl hover:opacity-90 transition shadow-md">
+                                Next →
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </form>
+        </div>
+
+        <!-- Right Side: Question Palette -->
+        <div class="lg:col-span-1 sticky top-36">
+            <div class="bg-ksCard p-5 rounded-2xl border border-ksBorder shadow-sm">
+                
+                <h3 class="text-sm font-extrabold text-white mb-4 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-th text-ksGold"></i> Question Palette
+                </h3>
+                
+                <!-- Status Legend -->
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-5 pb-4 border-b border-ksBorder">
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-ksDark border border-ksBorder inline-block"></span> 
+                        Unattempted
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> 
+                        Attempted
+                    </span>
+                </div>
+
+                <!-- Numbers Grid -->
+                <div class="grid grid-cols-5 gap-2 max-h-64 overflow-y-auto pr-1 custom-scrollbar">
+                    {% for q in questions %}
+                    <button type="button" 
+                            id="palette-btn-{{ forloop.counter }}" 
+                            onclick="showQuestion({{ forloop.counter }})" 
+                            class="palette-btn h-10 w-full rounded-lg font-bold text-sm border border-ksBorder text-slate-300 bg-ksDark hover:border-ksGold/50 hover:text-white transition-all flex items-center justify-center">
+                        {{ forloop.counter }}
+                    </button>
+                    {% endfor %}
+                </div>
+
+                <!-- Submit Button -->
+                <button type="button" onclick="confirmSubmit()" 
+                        class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl text-sm shadow-lg transition-all mt-6 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Final Submit Exam
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* Optional: nicer scrollbar for palette */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #1e2d4a;
+        border-radius: 10px;
+    }
+</style>
+
+<script>
+    let currentQuestion = 1;
+    const totalQuestions = {{ questions.count }};
+
+    // Show selected question card and highlight palette button ring
+    function showQuestion(index) {
+        if (index < 1 || index > totalQuestions) return;
+
+        // Hide current card
+        document.getElementById(`question-card-${currentQuestion}`).classList.add('hidden');
+        
+        // Remove active ring from previous palette button
+        const prevPaletteBtn = document.getElementById(`palette-btn-${currentQuestion}`);
+        prevPaletteBtn.classList.remove('ring-2', 'ring-ksGold', 'ring-offset-2', 'ring-offset-ksDark');
+
+        // Show target question card
+        currentQuestion = index;
+        document.getElementById(`question-card-${currentQuestion}`).classList.remove('hidden');
+
+        // Add active ring to current palette button
+        const activePaletteBtn = document.getElementById(`palette-btn-${currentQuestion}`);
+        activePaletteBtn.classList.add('ring-2', 'ring-ksGold', 'ring-offset-2', 'ring-offset-ksDark');
+    }
+
+    // Mark question palette as green (Attempted)
+    function markAttempted(index) {
+        const btn = document.getElementById(`palette-btn-${index}`);
+        btn.classList.remove('bg-ksDark', 'text-slate-300', 'border-ksBorder');
+        btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+    }
+
+    // Clear radio selection and revert palette button color
+    function clearSelection(fieldName, index) {
+        const radios = document.getElementsByName(fieldName);
+        for (let r of radios) {
+            r.checked = false;
+        }
+
+        const btn = document.getElementById(`palette-btn-${index}`);
+        btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+        btn.classList.add('bg-ksDark', 'text-slate-300', 'border-ksBorder');
+    }
+
+    // Initialize first palette item with highlight ring
+    document.addEventListener("DOMContentLoaded", function() {
+        const firstBtn = document.getElementById('palette-btn-1');
+        if (firstBtn) {
+            firstBtn.classList.add('ring-2', 'ring-ksGold', 'ring-offset-2', 'ring-offset-ksDark');
+        }
+    });
+
+    // Final Submission Handler
+    function confirmSubmit() {
+        if (confirm("Are you sure you want to finalize and submit your test?")) {
+            document.getElementById('examForm').submit();
+        }
+    }
+
+    // Timer Logic
+    let durationInSeconds = {{ test.duration_minutes }} * 60;
+    const timerElement = document.getElementById('timer');
+    const examForm = document.getElementById('examForm');
+
+    const countdown = setInterval(function() {
+        let minutes = Math.floor(durationInSeconds / 60);
+        let seconds = durationInSeconds % 60;
+
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        timerElement.textContent = `${minutes}:${seconds}`;
+
+        // Change timer color when less than 5 minutes left
+        if (durationInSeconds <= 300) {
+            timerElement.parentElement.parentElement.classList.add('animate-pulse');
+        }
+
+        if (durationInSeconds <= 0) {
+            clearInterval(countdown);
+            alert("Time limit reached! System will auto-submit your answers.");
+            examForm.submit();
+        }
+        durationInSeconds--;
+    }, 1000);
+</script>
+{% endblock %}

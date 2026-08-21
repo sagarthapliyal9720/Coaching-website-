@@ -1,0 +1,153 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10">
+    
+    <!-- Header -->
+    <div class="mb-8">
+        <a href="{% url 'teacher_dashboard' %}" class="text-slate-400 hover:text-ksGold text-sm font-semibold transition flex items-center gap-1">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <h1 class="text-3xl font-bold text-white mt-3">Manage Questions</h1>
+        <p class="text-slate-400 text-sm mt-1">
+            <span class="text-ksGold font-medium">{{ test.title }}</span> 
+            • Category: {{ test.category.name }} 
+            • Total Questions: <span class="text-white font-semibold">{{ questions.count }}</span>
+        </p>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="p-4 mb-6 text-sm rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-2">
+                <i class="fa-solid fa-circle-check"></i> {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Column: Forms -->
+        <div class="space-y-6">
+            
+            <!-- Manual Entry Form -->
+            <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder">
+                <h3 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
+                    <i class="fa-solid fa-plus text-ksGold"></i> Add Single Question
+                </h3>
+                <form method="POST" action="" class="space-y-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="add_manual">
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5">Question Text</label>
+                        <textarea name="question_text" required rows="3" 
+                                  class="w-full p-3 rounded-xl bg-ksDark border border-ksBorder text-white text-sm placeholder-slate-500 focus:ring-2 focus:ring-ksGold focus:border-transparent outline-none transition"
+                                  placeholder="Type question here..."></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" name="option_a" placeholder="Option A" required 
+                               class="p-2.5 rounded-xl bg-ksDark border border-ksBorder text-white text-sm placeholder-slate-500 focus:ring-2 focus:ring-ksGold outline-none transition">
+                        <input type="text" name="option_b" placeholder="Option B" required 
+                               class="p-2.5 rounded-xl bg-ksDark border border-ksBorder text-white text-sm placeholder-slate-500 focus:ring-2 focus:ring-ksGold outline-none transition">
+                        <input type="text" name="option_c" placeholder="Option C" required 
+                               class="p-2.5 rounded-xl bg-ksDark border border-ksBorder text-white text-sm placeholder-slate-500 focus:ring-2 focus:ring-ksGold outline-none transition">
+                        <input type="text" name="option_d" placeholder="Option D" required 
+                               class="p-2.5 rounded-xl bg-ksDark border border-ksBorder text-white text-sm placeholder-slate-500 focus:ring-2 focus:ring-ksGold outline-none transition">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Correct Option</label>
+                            <select name="correct_option" 
+                                    class="w-full p-2.5 rounded-xl bg-ksDark border border-ksBorder text-white text-sm focus:ring-2 focus:ring-ksGold outline-none transition">
+                                <option value="A" class="bg-ksDark">A</option>
+                                <option value="B" class="bg-ksDark">B</option>
+                                <option value="C" class="bg-ksDark">C</option>
+                                <option value="D" class="bg-ksDark">D</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Marks</label>
+                            <input type="number" name="marks" value="1" 
+                                   class="w-full p-2.5 rounded-xl bg-ksDark border border-ksBorder text-white text-sm focus:ring-2 focus:ring-ksGold outline-none transition">
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full gold-gradient hover:opacity-90 text-ksDark font-bold py-2.5 rounded-xl text-sm transition mt-2">
+                        + Add Question
+                    </button>
+                </form>
+            </div>
+
+            <!-- Bulk Upload Form -->
+            <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder">
+                <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-file-excel text-ksGold"></i> Bulk Excel / CSV Upload
+                </h3>
+                <p class="text-xs text-slate-400 mb-4">
+                    Columns order: <span class="text-ksGold">Question, OptionA, OptionB, OptionC, OptionD, CorrectOption, Marks</span>
+                </p>
+
+                <form method="POST" enctype="multipart/form-data" action="" class="space-y-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="bulk_upload">
+                    
+                    <input type="file" name="file" accept=".xlsx, .csv" required 
+                           class="block w-full text-xs text-slate-400
+                                  file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 
+                                  file:text-xs file:font-semibold 
+                                  file:bg-ksGold file:text-ksDark 
+                                  hover:file:bg-amber-500 cursor-pointer">
+                    
+                    <button type="submit" 
+                            class="w-full bg-white/5 hover:bg-white/10 border border-ksBorder text-white font-bold py-2.5 rounded-xl text-sm transition">
+                        Upload File
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Questions List -->
+        <div class="lg:col-span-2 space-y-4">
+            <h3 class="text-xl font-bold text-white mb-2">Added Questions List</h3>
+            
+            {% for q in questions %}
+            <div class="bg-ksCard p-5 rounded-xl border border-ksBorder hover:border-ksGold/30 transition">
+                <div class="flex justify-between items-start mb-3">
+                    <p class="font-semibold text-white text-base leading-relaxed">
+                        <span class="text-ksGold">Q{{ forloop.counter }}.</span> {{ q.question_text }}
+                    </p>
+                    <span class="text-xs bg-ksGold/15 text-ksGold font-bold px-2.5 py-1 rounded-lg whitespace-nowrap ml-3">
+                        {{ q.marks }} Marks
+                    </span>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm mt-3">
+                    <div class="p-2.5 rounded-lg {% if q.correct_option == 'A' %}bg-emerald-500/15 text-emerald-400 font-semibold border border-emerald-500/20{% else %}bg-ksDark text-slate-400 border border-ksBorder{% endif %}">
+                        A) {{ q.option_a }}
+                    </div>
+                    <div class="p-2.5 rounded-lg {% if q.correct_option == 'B' %}bg-emerald-500/15 text-emerald-400 font-semibold border border-emerald-500/20{% else %}bg-ksDark text-slate-400 border border-ksBorder{% endif %}">
+                        B) {{ q.option_b }}
+                    </div>
+                    <div class="p-2.5 rounded-lg {% if q.correct_option == 'C' %}bg-emerald-500/15 text-emerald-400 font-semibold border border-emerald-500/20{% else %}bg-ksDark text-slate-400 border border-ksBorder{% endif %}">
+                        C) {{ q.option_c }}
+                    </div>
+                    <div class="p-2.5 rounded-lg {% if q.correct_option == 'D' %}bg-emerald-500/15 text-emerald-400 font-semibold border border-emerald-500/20{% else %}bg-ksDark text-slate-400 border border-ksBorder{% endif %}">
+                        D) {{ q.option_d }}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="bg-ksCard p-12 text-center rounded-xl border border-ksBorder text-slate-500">
+                <i class="fa-regular fa-folder-open text-4xl mb-3 opacity-50"></i>
+                <p>No questions added to this test yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

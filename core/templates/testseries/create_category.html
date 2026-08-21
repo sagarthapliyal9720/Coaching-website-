@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-ksDark py-12 px-4">
+    <div class="max-w-md w-full bg-ksCard p-8 rounded-2xl shadow-xl border border-ksBorder">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-ksGold/15 flex items-center justify-center text-2xl text-ksGold">
+                <i class="fa-solid fa-folder-plus"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-white">Create Exam Category</h2>
+            <p class="text-slate-400 text-sm mt-1">Add a new category for your test series</p>
+        </div>
+
+        <form method="POST" action="{% url 'create_category' %}" class="space-y-5">
+            {% csrf_token %}
+            
+            <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-1.5">Category Name</label>
+                <input type="text" name="name" placeholder="e.g. Science, Maths, JEE, NDA" required
+                       class="w-full px-4 py-3 rounded-xl bg-ksDark border border-ksBorder text-white placeholder-slate-500 focus:ring-2 focus:ring-ksGold focus:border-transparent outline-none transition">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-1.5">Description (Optional)</label>
+                <textarea name="description" rows="3" placeholder="Brief description..."
+                          class="w-full px-4 py-3 rounded-xl bg-ksDark border border-ksBorder text-white placeholder-slate-500 focus:ring-2 focus:ring-ksGold focus:border-transparent outline-none transition"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="w-full gold-gradient hover:opacity-90 text-ksDark font-bold py-3.5 rounded-xl transition shadow-md mt-2">
+                <i class="fa-solid fa-save mr-2"></i> Save Category
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

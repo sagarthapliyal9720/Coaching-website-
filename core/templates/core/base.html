@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KS Coaching | Knowledge Pathway to Success</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ksBlue: '#0a1f44',
+                        ksGold: '#d4af37',
+                        ksDark: '#050d1a',
+                        ksCard: '#0f1c33',
+                        ksBorder: '#1e2d4a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        .gold-gradient { background: linear-gradient(135deg, #d4af37, #f0d060); }
+        .text-gradient { background: linear-gradient(135deg, #d4af37, #f0d060); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="bg-ksDark text-slate-200 font-sans antialiased">
+
+    <!-- ========== HEADER ========== -->
+    <header class="sticky top-0 z-50 bg-ksDark/95 backdrop-blur-md border-b border-ksBorder shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="{% url 'home' %}" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl bg-ksGold/20 flex items-center justify-center text-ksGold text-xl shadow-md group-hover:scale-105 transition">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-black text-white tracking-tight">KS <span class="text-ksGold">Coaching</span></span>
+                    <p class="text-[10px] text-slate-400 -mt-1 font-medium tracking-wide">Knowledge Pathway to Success</p>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center gap-8 font-semibold text-slate-300 text-sm">
+                <a href="{% url 'home' %}" class="hover:text-ksGold transition">Home</a>
+                <a href="#about" class="hover:text-ksGold transition">About</a>
+                <a href="#courses" class="hover:text-ksGold transition">Courses</a>
+                <a href="#why-us" class="hover:text-ksGold transition">Why Us</a>
+                <a href="#contact" class="hover:text-ksGold transition">Contact</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'student_test_list' %}" class="bg-ksGold/15 text-ksGold border border-ksGold/40 hover:bg-ksGold hover:text-ksDark px-4 py-2 rounded-xl transition flex items-center gap-2 text-sm font-bold">
+                        <i class="fa-solid fa-pen-to-square"></i> Explore Tests
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'student_test_list' %}" class="bg-ksGold/15 text-ksGold border border-ksGold/40 hover:bg-ksGold hover:text-ksDark px-4 py-2 rounded-xl transition flex items-center gap-2 text-sm font-bold">
+                        <i class="fa-solid fa-pen-to-square"></i> Explore Tests
+                    </a>
+                {% endif %}
+            </div>
+
+            <!-- Auth Buttons -->
+            <div class="flex items-center gap-3">
+                {% if user.is_authenticated %}
+                    {% if user.role == 'teacher' or user.is_staff %}
+                        <a href="{% url 'teacher_dashboard' %}" class="hidden sm:flex bg-amber-500 hover:bg-amber-600 text-ksDark font-bold px-3.5 py-2 rounded-xl text-xs items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-chalkboard-user"></i> Dashboard
+                        </a>
+                    {% endif %}
+                    <div class="hidden md:flex items-center gap-2 bg-ksCard px-3 py-1.5 rounded-xl border border-ksBorder">
+                        <i class="fa-solid fa-circle-user text-ksGold"></i>
+                        <span class="text-xs font-bold text-slate-200">{{ user.full_name }}
+                            <span class="ml-1 bg-ksBorder text-slate-400 px-1.5 py-0.5 rounded capitalize text-[10px]">{{ user.role }}</span>
+                        </span>
+                    </div>
+                    <a href="{% url 'logout' %}" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-3.5 py-2 rounded-xl text-xs shadow-sm">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-slate-300 hover:text-ksGold font-semibold px-3 py-2 text-sm">Login</a>
+                    <a href="{% url 'register' %}" class="bg-ksGold hover:bg-amber-500 text-ksDark font-semibold px-5 py-2.5 rounded-xl text-sm shadow-md transition">Register</a>
+                    <a href="{% url 'login' %}?role=teacher" class="hidden xl:inline-flex border border-ksGold text-ksGold hover:bg-ksGold hover:text-ksDark font-semibold px-3.5 py-2 rounded-xl text-xs transition">
+                        Teacher Portal
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-ksDark border-t border-ksBorder pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <!-- Brand -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-2.5 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-ksGold/20 flex items-center justify-center text-ksGold text-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="text-xl font-black text-white">KS <span class="text-ksGold">Coaching</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Where Knowledge Leads to Success. Premium coaching for IIT JEE, CUET UG, IIT JAM & Board exams in Rishikesh.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-9 h-9 rounded-lg bg-ksCard hover:bg-ksGold hover:text-ksDark flex items-center justify-center transition border border-ksBorder"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-ksCard hover:bg-ksGold hover:text-ksDark flex items-center justify-center transition border border-ksBorder"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-ksCard hover:bg-ksGold hover:text-ksDark flex items-center justify-center transition border border-ksBorder"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2.5 text-sm text-slate-400">
+                        <li><a href="{% url 'home' %}" class="hover:text-ksGold transition">Home</a></li>
+                        <li><a href="#about" class="hover:text-ksGold transition">About Us</a></li>
+                        <li><a href="#courses" class="hover:text-ksGold transition">Courses</a></li>
+                        <li><a href="{% url 'student_test_list' %}" class="hover:text-ksGold transition">Test Series</a></li>
+                        <li><a href="#contact" class="hover:text-ksGold transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Courses -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Our Courses</h4>
+                    <ul class="space-y-2.5 text-sm text-slate-400">
+                        <li><a href="#courses" class="hover:text-ksGold transition">IIT JEE (Mains + Advanced)</a></li>
+                        <li><a href="#courses" class="hover:text-ksGold transition">CUET UG</a></li>
+                        <li><a href="#courses" class="hover:text-ksGold transition">IIT JAM / MSc Entrance</a></li>
+                        <li><a href="#courses" class="hover:text-ksGold transition">Class 6th – 12th</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone text-ksGold mt-0.5"></i>
+                            <a href="tel:7017178975" class="hover:text-ksGold">+91 70171 78975</a>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-brands fa-whatsapp text-ksGold mt-0.5"></i>
+                            <a href="https://wa.me/917017178975" target="_blank" class="hover:text-ksGold">WhatsApp Us</a>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-ksGold mt-0.5"></i>
+                            <span>Rishikesh, Uttarakhand</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-clock text-ksGold mt-0.5"></i>
+                            <span>Mon – Sat | 8 AM – 8 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-ksBorder pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+                <p>© 2026 KS Coaching. All Rights Reserved.</p>
+                <p class="text-xs">Designed with <i class="fa-solid fa-heart text-red-500"></i> for student success</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

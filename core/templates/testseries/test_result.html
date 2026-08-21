@@ -1,0 +1,111 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10">
+    
+    <!-- Top Result Summary Card -->
+    <div class="bg-ksCard rounded-3xl p-8 border border-ksBorder shadow-sm text-center mb-10">
+        
+        <div class="w-16 h-16 bg-ksGold/15 text-ksGold rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+
+        <h1 class="text-2xl font-extrabold text-white">Test Result Summary</h1>
+        <p class="text-slate-400 text-sm mt-1">{{ result.test.title }}</p>
+
+        <!-- Score & Metrics -->
+        <div class="my-7 p-6 bg-ksDark rounded-2xl border border-ksBorder flex flex-col sm:flex-row justify-around items-center gap-6">
+            <div>
+                <span class="text-xs uppercase font-bold text-slate-400 tracking-wider">Your Final Score</span>
+                <div class="text-3xl font-black text-ksGold mt-1">
+                    {{ result.score_obtained }} <span class="text-lg text-slate-500 font-normal">/ {{ result.total_marks }}</span>
+                </div>
+            </div>
+            
+            <div class="flex gap-4 text-center">
+                <div class="px-4 py-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                    <span class="block text-xl font-bold text-emerald-400">{{ result.correct_count }}</span>
+                    <span class="text-[10px] font-semibold text-emerald-500/80 uppercase">Correct</span>
+                </div>
+                <div class="px-4 py-2 bg-red-500/10 rounded-xl border border-red-500/20">
+                    <span class="block text-xl font-bold text-red-400">{{ result.wrong_count }}</span>
+                    <span class="text-[10px] font-semibold text-red-500/80 uppercase">Wrong</span>
+                </div>
+                <div class="px-4 py-2 bg-slate-500/10 rounded-xl border border-slate-500/20">
+                    <span class="block text-xl font-bold text-slate-400">{{ result.unattempted_count }}</span>
+                    <span class="text-[10px] font-semibold text-slate-500 uppercase">Skipped</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+            <a href="{% url 'download_result_pdf' result.id %}" 
+               class="flex-1 gold-gradient hover:opacity-90 text-ksDark font-bold py-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2 text-sm">
+                <i class="fa-solid fa-file-pdf"></i> Download PDF Scorecard
+            </a>
+            <a href="{% url 'student_test_list' %}" 
+               class="flex-1 bg-ksDark hover:bg-white/5 border border-ksBorder text-slate-300 hover:text-white font-bold py-3.5 rounded-xl transition text-sm">
+                Back to Tests
+            </a>
+        </div>
+    </div>
+
+    <!-- Detailed Solutions Section -->
+    <div class="space-y-6">
+        <h2 class="text-xl font-extrabold text-white border-b border-ksBorder pb-3 flex items-center gap-2">
+            <i class="fa-solid fa-square-poll-vertical text-ksGold"></i> Detailed Solutions & Answer Key
+        </h2>
+
+        {% for item in detailed_questions %}
+        <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder">
+            
+            <div class="flex items-start justify-between gap-4 mb-5">
+                <h3 class="text-base font-bold text-white leading-relaxed">
+                    <span class="text-ksGold">Q{{ forloop.counter }}.</span> {{ item.question.question_text }}
+                </h3>
+                
+                <!-- Status Badge -->
+                {% if item.is_correct %}
+                    <span class="text-xs bg-emerald-500/15 text-emerald-400 font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 border border-emerald-500/20">
+                        <i class="fa-solid fa-check"></i> Correct
+                    </span>
+                {% elif item.is_unattempted %}
+                    <span class="text-xs bg-slate-500/15 text-slate-400 font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 border border-slate-500/20">
+                        Unattempted
+                    </span>
+                {% else %}
+                    <span class="text-xs bg-red-500/15 text-red-400 font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shrink-0 border border-red-500/20">
+                        <i class="fa-solid fa-xmark"></i> Wrong
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Options Grid -->
+            <div class="space-y-2.5">
+                {% for code, text in item.options %}
+                    {% if code == item.correct_option %}
+                        <!-- Correct Answer -->
+                        <div class="p-3.5 rounded-xl border-2 border-emerald-500/60 bg-emerald-500/10 text-emerald-300 font-medium text-sm flex justify-between items-center">
+                            <span><b>{{ code }})</b> {{ text }}</span>
+                            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-md">Correct Answer</span>
+                        </div>
+                    {% elif code == item.user_choice and not item.is_correct %}
+                        <!-- Wrong Selected Option -->
+                        <div class="p-3.5 rounded-xl border-2 border-red-500/50 bg-red-500/10 text-red-300 font-medium text-sm flex justify-between items-center">
+                            <span><b>{{ code }})</b> {{ text }}</span>
+                            <span class="text-xs font-bold text-red-400 bg-red-500/20 px-2.5 py-0.5 rounded-md">Your Selection</span>
+                        </div>
+                    {% else %}
+                        <!-- Neutral Option -->
+                        <div class="p-3.5 rounded-xl border border-ksBorder bg-ksDark text-slate-400 text-sm">
+                            <b>{{ code }})</b> {{ text }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

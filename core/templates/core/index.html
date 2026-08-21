@@ -1,0 +1,427 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ==================== HERO ==================== -->
+<section id="home" class="relative bg-gradient-to-br from-ksDark via-[#0a1628] to-[#050d1a] text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 text-8xl text-ksGold">π</div>
+        <div class="absolute bottom-32 right-20 text-7xl text-ksGold">Σ</div>
+        <div class="absolute top-40 right-1/4 text-6xl text-ksGold">E=mc²</div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 bg-ksGold/10 border border-ksGold/30 text-ksGold text-xs font-bold px-4 py-1.5 rounded-full mb-6">
+                    <span class="w-2 h-2 rounded-full bg-ksGold animate-pulse"></span>
+                    Admissions Open 2026 • New Batches Starting Soon
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-4">
+                    KS <span class="text-ksGold">Coaching</span>
+                </h1>
+                <p class="text-xl sm:text-2xl text-ksGold font-semibold mb-6">
+                    Where Knowledge Leads to Success
+                </p>
+                <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg">
+                    Premium coaching for <strong class="text-white">IIT JEE</strong>, <strong class="text-white">CUET UG</strong>, <strong class="text-white">IIT JAM</strong> & Classes 6th–12th with concept-based learning and proven results.
+                </p>
+
+                <div class="flex flex-wrap gap-4 mb-10">
+                    <a href="https://wa.me/917017178975" target="_blank"
+                       class="gold-gradient hover:opacity-90 text-ksDark font-bold px-7 py-3.5 rounded-xl shadow-lg transition flex items-center gap-2.5">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> Join Now
+                    </a>
+                    <a href="tel:7017178975"
+                       class="bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold px-7 py-3.5 rounded-xl backdrop-blur transition flex items-center gap-2.5">
+                        <i class="fa-solid fa-phone"></i> Call Now
+                    </a>
+                </div>
+
+                <div class="flex flex-wrap gap-6 text-sm text-slate-300">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check-circle text-ksGold"></i>
+                        <span>Experienced Faculty</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check-circle text-ksGold"></i>
+                        <span>Regular Test Series</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check-circle text-ksGold"></i>
+                        <span>Personal Mentorship</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right visual card -->
+            <div class="hidden lg:flex justify-center">
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-ksGold/10 rounded-3xl blur-2xl"></div>
+                    <div class="relative bg-ksCard/80 backdrop-blur-xl border border-ksBorder rounded-3xl p-8 w-80 text-center shadow-2xl">
+                        <div class="w-20 h-20 mx-auto mb-5 rounded-2xl bg-ksGold/15 flex items-center justify-center text-4xl text-ksGold">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Best Offer</h3>
+                        <p class="text-ksGold font-semibold text-lg mb-1">FREE Board + CUET UG</p>
+                        <p class="text-slate-400 text-sm mb-6">Preparation with selected courses</p>
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="bg-white/5 rounded-xl py-3 border border-ksBorder">
+                                <div class="text-ksGold font-bold text-lg">IIT JEE</div>
+                                <div class="text-slate-400">Mains + Adv</div>
+                            </div>
+                            <div class="bg-white/5 rounded-xl py-3 border border-ksBorder">
+                                <div class="text-ksGold font-bold text-lg">CUET</div>
+                                <div class="text-slate-400">All Subjects</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== HIGHLIGHTS BAR ==================== -->
+<section class="bg-ksCard border-y border-ksBorder py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition">
+                <div class="w-12 h-12 rounded-xl bg-ksGold/15 text-ksGold flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Expert Faculty</h4>
+                    <p class="text-xs text-slate-400">Experienced Mentors</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition">
+                <div class="w-12 h-12 rounded-xl bg-ksGold/15 text-ksGold flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Concept Clarity</h4>
+                    <p class="text-xs text-slate-400">Strong Fundamentals</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition">
+                <div class="w-12 h-12 rounded-xl bg-ksGold/15 text-ksGold flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Result Oriented</h4>
+                    <p class="text-xs text-slate-400">Proven Strategies</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition">
+                <div class="w-12 h-12 rounded-xl bg-ksGold/15 text-ksGold flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Personal Mentorship</h4>
+                    <p class="text-xs text-slate-400">Small Batch Size</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section id="about" class="py-20 bg-ksDark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+            <div>
+                <span class="text-ksGold font-bold tracking-wider uppercase text-sm">About KS Coaching</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2 mb-6">
+                    Building Strong Foundations<br>For a Bright Future
+                </h2>
+                <p class="text-slate-400 leading-relaxed mb-6">
+                    KS Coaching is committed to providing quality education with experienced faculty, concept-based learning and personal attention. Our goal is to help every student achieve academic excellence while developing confidence and discipline.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-ksCard p-4 rounded-xl border border-ksBorder">
+                        <div class="text-2xl font-black text-ksGold mb-1">500+</div>
+                        <div class="text-xs text-slate-400">Students Mentored</div>
+                    </div>
+                    <div class="bg-ksCard p-4 rounded-xl border border-ksBorder">
+                        <div class="text-2xl font-black text-ksGold mb-1">95%+</div>
+                        <div class="text-xs text-slate-400">Success Rate</div>
+                    </div>
+                    <div class="bg-ksCard p-4 rounded-xl border border-ksBorder">
+                        <div class="text-2xl font-black text-ksGold mb-1">10+</div>
+                        <div class="text-xs text-slate-400">Expert Teachers</div>
+                    </div>
+                    <div class="bg-ksCard p-4 rounded-xl border border-ksBorder">
+                        <div class="text-2xl font-black text-ksGold mb-1">5+</div>
+                        <div class="text-xs text-slate-400">Years of Excellence</div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="bg-ksCard rounded-3xl p-8 text-white relative overflow-hidden border border-ksBorder">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-ksGold/5 rounded-full -mr-20 -mt-20"></div>
+                    <h3 class="text-xl font-bold mb-6 relative z-10 text-white">What We Focus On</h3>
+                    <ul class="space-y-4 relative z-10 text-slate-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-ksGold mt-1"></i>
+                            <span>In-depth Conceptual Understanding</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-ksGold mt-1"></i>
+                            <span>Regular Weekly Test Series & Analysis</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-ksGold mt-1"></i>
+                            <span>Dedicated Doubt Clearing Sessions</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-ksGold mt-1"></i>
+                            <span>Board + Competitive Exam Integration</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-ksGold mt-1"></i>
+                            <span>Personalized Mentorship & Guidance</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== COURSES ==================== -->
+<section id="courses" class="py-20 bg-ksCard">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+            <span class="text-ksGold font-bold tracking-wider uppercase text-sm">Our Courses</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Choose Your Academic Journey</h2>
+            <p class="text-slate-400 mt-3 max-w-2xl mx-auto">From foundation classes to top competitive exams — we have the right path for every student.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+
+            <!-- IIT JEE -->
+            <div class="group bg-ksDark rounded-2xl border border-ksBorder p-7 hover:border-ksGold/40 hover:shadow-xl hover:shadow-ksGold/5 transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-ksGold/15 text-ksGold flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-1">IIT JEE</h3>
+                <p class="text-ksGold text-sm font-semibold mb-4">Mains & Advanced</p>
+                <ul class="space-y-2.5 text-sm text-slate-400 mb-6">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Conceptual Clarity</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Problem Solving Focus</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Exam Oriented Strategy</li>
+                </ul>
+                <a href="#contact" class="block text-center bg-ksGold/10 border border-ksGold/30 text-ksGold font-semibold py-3 rounded-xl hover:bg-ksGold hover:text-ksDark transition">Enquire Now</a>
+            </div>
+
+            <!-- CUET UG (Most Popular) -->
+            <div class="group relative bg-ksDark rounded-2xl border-2 border-ksGold p-7 hover:shadow-xl hover:shadow-ksGold/10 transition-all duration-300">
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-ksGold text-ksDark text-xs font-bold px-4 py-1 rounded-full">Most Popular</span>
+                <div class="w-14 h-14 rounded-2xl bg-ksGold text-ksDark flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-1">CUET UG</h3>
+                <p class="text-ksGold text-sm font-semibold mb-4">Common University Entrance Test</p>
+                <ul class="space-y-2.5 text-sm text-slate-400 mb-6">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> All Subjects Covered</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Expert Faculty</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> High Score Strategy</li>
+                </ul>
+                <a href="#contact" class="block text-center gold-gradient text-ksDark font-bold py-3 rounded-xl hover:opacity-90 transition">Enquire Now</a>
+            </div>
+
+            <!-- IIT JAM -->
+            <div class="group bg-ksDark rounded-2xl border border-ksBorder p-7 hover:border-ksGold/40 hover:shadow-xl hover:shadow-ksGold/5 transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-ksGold/15 text-ksGold flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-microscope"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-1">IIT JAM / MSc</h3>
+                <p class="text-ksGold text-sm font-semibold mb-4">Entrance Exam Preparation</p>
+                <ul class="space-y-2.5 text-sm text-slate-400 mb-6">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> In-depth Preparation</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Previous Year Analysis</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Rank Improvement</li>
+                </ul>
+                <a href="#contact" class="block text-center bg-ksGold/10 border border-ksGold/30 text-ksGold font-semibold py-3 rounded-xl hover:bg-ksGold hover:text-ksDark transition">Enquire Now</a>
+            </div>
+
+            <!-- Class 6-10 -->
+            <div class="group bg-ksDark rounded-2xl border border-ksBorder p-7 hover:border-ksGold/40 hover:shadow-xl hover:shadow-ksGold/5 transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-1">Class 6th – 10th</h3>
+                <p class="text-ksGold text-sm font-semibold mb-4">Science & Mathematics</p>
+                <ul class="space-y-2.5 text-sm text-slate-400 mb-6">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Strong Fundamentals</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Concept Clarity</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Better Performance</li>
+                </ul>
+                <a href="#contact" class="block text-center bg-ksGold/10 border border-ksGold/30 text-ksGold font-semibold py-3 rounded-xl hover:bg-ksGold hover:text-ksDark transition">Enquire Now</a>
+            </div>
+
+            <!-- Class 11-12 -->
+            <div class="group bg-ksDark rounded-2xl border border-ksBorder p-7 hover:border-ksGold/40 hover:shadow-xl hover:shadow-ksGold/5 transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl bg-indigo-500/15 text-indigo-400 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-atom"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-1">Class 11th & 12th</h3>
+                <p class="text-ksGold text-sm font-semibold mb-4">Physics | Chemistry | Maths</p>
+                <ul class="space-y-2.5 text-sm text-slate-400 mb-6">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Board + Competitive</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> In-depth Concepts</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-ksGold text-xs"></i> Exam Oriented Prep</li>
+                </ul>
+                <a href="#contact" class="block text-center bg-ksGold/10 border border-ksGold/30 text-ksGold font-semibold py-3 rounded-xl hover:bg-ksGold hover:text-ksDark transition">Enquire Now</a>
+            </div>
+
+            <!-- Free Offer Card -->
+            <div class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-ksGold/20 to-ksCard p-7 text-white border border-ksGold/30">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-ksGold/10 rounded-full -mr-16 -mt-16"></div>
+                <div class="relative z-10">
+                    <div class="text-ksGold text-sm font-bold mb-2">SPECIAL OFFER</div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Free Board + CUET UG Preparation</h3>
+                    <p class="text-slate-300 text-sm mb-6">With selected competitive courses. Limited seats available.</p>
+                    <a href="https://wa.me/917017178975" target="_blank"
+                       class="inline-flex items-center gap-2 gold-gradient text-ksDark font-bold px-5 py-2.5 rounded-xl text-sm">
+                        Claim Offer <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== WHY CHOOSE US ==================== -->
+<section id="why-us" class="py-20 bg-ksDark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+            <span class="text-ksGold font-bold tracking-wider uppercase text-sm">Why Choose KS Coaching?</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">What Makes Us Different</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder hover:border-ksGold/30 transition text-center">
+                <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-ksGold/15 text-ksGold flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">Comprehensive Study Material</h4>
+                <p class="text-sm text-slate-400">Well-structured notes & practice sheets</p>
+            </div>
+            <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder hover:border-ksGold/30 transition text-center">
+                <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-ksGold/15 text-ksGold flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">Regular Doubt Sessions</h4>
+                <p class="text-sm text-slate-400">Never leave a concept unclear</p>
+            </div>
+            <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder hover:border-ksGold/30 transition text-center">
+                <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-ksGold/15 text-ksGold flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-chart-bar"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">Performance Tracking</h4>
+                <p class="text-sm text-slate-400">Weekly tests + detailed analysis</p>
+            </div>
+            <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder hover:border-ksGold/30 transition text-center">
+                <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-ksGold/15 text-ksGold flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">Motivating Environment</h4>
+                <p class="text-sm text-slate-400">Positive & competitive culture</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CONTACT + MAP ==================== -->
+<section id="contact" class="py-20 bg-ksCard">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-ksGold font-bold tracking-wider uppercase text-sm">Get In Touch</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Admission Enquiry</h2>
+            <p class="text-slate-400 mt-3">Have questions about batches, fees or courses? Reach out to us.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <!-- Contact Info + Map -->
+            <div class="space-y-6">
+                <div class="bg-ksDark rounded-2xl p-6 border border-ksBorder">
+                    <div class="flex items-start gap-4 mb-5">
+                        <div class="w-12 h-12 rounded-xl bg-ksGold/15 text-ksGold flex items-center justify-center">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Phone / WhatsApp</h4>
+                            <a href="tel:7017178975" class="text-ksGold font-semibold hover:underline">+91 70171 78975</a>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 mb-5">
+                        <div class="w-12 h-12 rounded-xl bg-ksGold/15 text-ksGold flex items-center justify-center">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Location</h4>
+                            <p class="text-slate-400 text-sm">Rishikesh, Uttarakhand</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-ksGold/15 text-ksGold flex items-center justify-center">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Working Hours</h4>
+                            <p class="text-slate-400 text-sm">Monday – Saturday | 8 AM – 8 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Map -->
+                <div class="rounded-2xl overflow-hidden border border-ksBorder h-64">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.5!2d78.267!3d30.086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDA1JzA5LjYiTiA3OMKwMTYnMDEuMiJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Enquiry Form -->
+            <form class="bg-ksDark p-8 rounded-2xl border border-ksBorder space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Full Name</label>
+                    <input type="text" placeholder="Enter your full name" 
+                           class="w-full px-4 py-3 rounded-xl bg-ksCard border border-ksBorder text-white placeholder-slate-500 focus:ring-2 focus:ring-ksGold focus:border-transparent outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Phone Number</label>
+                    <input type="tel" placeholder="Enter mobile number" 
+                           class="w-full px-4 py-3 rounded-xl bg-ksCard border border-ksBorder text-white placeholder-slate-500 focus:ring-2 focus:ring-ksGold focus:border-transparent outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Select Course</label>
+                    <select class="w-full px-4 py-3 rounded-xl bg-ksCard border border-ksBorder text-white focus:ring-2 focus:ring-ksGold focus:border-transparent outline-none transition">
+                        <option class="bg-ksDark">IIT JEE (Mains + Advanced)</option>
+                        <option class="bg-ksDark">CUET UG</option>
+                        <option class="bg-ksDark">IIT JAM / MSc Entrance</option>
+                        <option class="bg-ksDark">Class 6th – 10th</option>
+                        <option class="bg-ksDark">Class 11th & 12th</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Message (Optional)</label>
+                    <textarea rows="3" placeholder="Any specific question?" 
+                              class="w-full px-4 py-3 rounded-xl bg-ksCard border border-ksBorder text-white placeholder-slate-500 focus:ring-2 focus:ring-ksGold focus:border-transparent outline-none transition"></textarea>
+                </div>
+                <button type="button" 
+                        class="w-full gold-gradient hover:opacity-90 text-ksDark font-bold py-3.5 rounded-xl transition shadow-md">
+                    Submit Enquiry
+                </button>
+                <p class="text-center text-xs text-slate-500">We’ll contact you within 24 hours</p>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

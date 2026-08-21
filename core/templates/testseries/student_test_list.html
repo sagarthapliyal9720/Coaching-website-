@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-12">
+    
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-12">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white">Available Test Series</h1>
+        <p class="text-slate-400 mt-3">Select a test below to start practicing and evaluate your score.</p>
+    </div>
+
+    <!-- Category Filter Pills -->
+    <div class="flex flex-wrap gap-2.5 justify-center mb-10">
+        <a href="{% url 'student_test_list' %}" 
+           class="px-5 py-2 rounded-full text-sm font-bold transition-all
+                  {% if not selected_category %}
+                      gold-gradient text-ksDark shadow-md
+                  {% else %}
+                      bg-ksCard text-slate-300 border border-ksBorder hover:border-ksGold/40 hover:text-ksGold
+                  {% endif %}">
+            All Tests
+        </a>
+        {% for cat in categories %}
+            <a href="{% url 'student_test_list' %}?category={{ cat.id }}" 
+               class="px-5 py-2 rounded-full text-sm font-bold transition-all
+                      {% if selected_category == cat.id|stringformat:'s' %}
+                          gold-gradient text-ksDark shadow-md
+                      {% else %}
+                          bg-ksCard text-slate-300 border border-ksBorder hover:border-ksGold/40 hover:text-ksGold
+                      {% endif %}">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- Tests Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for test in tests %}
+        <div class="bg-ksCard p-6 rounded-2xl border border-ksBorder hover:border-ksGold/40 hover:shadow-xl hover:shadow-ksGold/5 transition-all duration-300 flex flex-col justify-between group">
+            <div>
+                <span class="inline-block bg-ksGold/15 text-ksGold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                    {{ test.category.name }}
+                </span>
+                
+                <h3 class="text-xl font-bold text-white mt-4 mb-4 group-hover:text-ksGold transition">
+                    {{ test.title }}
+                </h3>
+                
+                <div class="space-y-2.5 text-sm text-slate-400">
+                    <p class="flex items-center gap-2.5">
+                        <i class="fa-regular fa-clock text-ksGold w-4"></i>
+                        <span><b class="text-slate-300">Duration:</b> {{ test.duration_minutes }} Minutes</span>
+                    </p>
+                    <p class="flex items-center gap-2.5">
+                        <i class="fa-regular fa-file-lines text-ksGold w-4"></i>
+                        <span><b class="text-slate-300">Questions:</b> {{ test.questions.count }}</span>
+                    </p>
+                    <p class="flex items-center gap-2.5">
+                        <i class="fa-solid fa-award text-ksGold w-4"></i>
+                        <span><b class="text-slate-300">Total Marks:</b> {{ test.total_marks }}</span>
+                    </p>
+                    <p class="flex items-center gap-2.5">
+                        <i class="fa-solid fa-triangle-exclamation text-ksGold w-4"></i>
+                        <span>
+                            <b class="text-slate-300">Negative Marking:</b> 
+                            {% if test.has_negative_marking %}
+                                <span class="text-red-400 font-semibold">Yes (-{{ test.negative_marks_per_question }})</span>
+                            {% else %}
+                                <span class="text-emerald-400">No</span>
+                            {% endif %}
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <a href="{% url 'take_test' test.id %}" 
+               class="block text-center w-full mt-6 gold-gradient hover:opacity-90 text-ksDark font-bold py-3 rounded-xl transition shadow-md">
+                Attempt Test <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-16 text-slate-500 bg-ksCard rounded-2xl border border-ksBorder">
+            <i class="fa-regular fa-folder-open text-5xl mb-4 opacity-40"></i>
+            <p class="text-lg">No tests available under this category.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
