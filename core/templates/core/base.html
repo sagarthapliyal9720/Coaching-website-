@@ -67,15 +67,15 @@
                 {% endif %}
             </div>
 
-            <!-- Auth Buttons -->
-            <div class="flex items-center gap-3">
+            <!-- Desktop Auth Buttons -->
+            <div class="hidden lg:flex items-center gap-3">
                 {% if user.is_authenticated %}
                     {% if user.role == 'teacher' or user.is_staff %}
-                        <a href="{% url 'teacher_dashboard' %}" class="hidden sm:flex bg-amber-500 hover:bg-amber-600 text-ksDark font-bold px-3.5 py-2 rounded-xl text-xs items-center gap-1.5 shadow-sm">
+                        <a href="{% url 'teacher_dashboard' %}" class="flex bg-amber-500 hover:bg-amber-600 text-ksDark font-bold px-3.5 py-2 rounded-xl text-xs items-center gap-1.5 shadow-sm">
                             <i class="fa-solid fa-chalkboard-user"></i> Dashboard
                         </a>
                     {% endif %}
-                    <div class="hidden md:flex items-center gap-2 bg-ksCard px-3 py-1.5 rounded-xl border border-ksBorder">
+                    <div class="flex items-center gap-2 bg-ksCard px-3 py-1.5 rounded-xl border border-ksBorder">
                         <i class="fa-solid fa-circle-user text-ksGold"></i>
                         <span class="text-xs font-bold text-slate-200">{{ user.full_name }}
                             <span class="ml-1 bg-ksBorder text-slate-400 px-1.5 py-0.5 rounded capitalize text-[10px]">{{ user.role }}</span>
@@ -90,7 +90,56 @@
                     </a>
                 {% endif %}
             </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-lg bg-ksCard border border-ksBorder flex items-center justify-center text-ksGold text-lg">
+                <i id="mobileMenuIcon" class="fa-solid fa-bars"></i>
+            </button>
         </nav>
+
+        <!-- Mobile Nav Panel -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-ksBorder bg-ksDark/98 backdrop-blur-md">
+            <div class="px-4 py-5 space-y-1 font-semibold text-slate-300 text-sm">
+                <a href="{% url 'home' %}" class="block px-3 py-2.5 rounded-lg hover:bg-ksCard hover:text-ksGold transition">Home</a>
+                <a href="#about" class="block px-3 py-2.5 rounded-lg hover:bg-ksCard hover:text-ksGold transition">About</a>
+                <a href="#courses" class="block px-3 py-2.5 rounded-lg hover:bg-ksCard hover:text-ksGold transition">Courses</a>
+                <a href="#why-us" class="block px-3 py-2.5 rounded-lg hover:bg-ksCard hover:text-ksGold transition">Why Us</a>
+                <a href="#contact" class="block px-3 py-2.5 rounded-lg hover:bg-ksCard hover:text-ksGold transition">Contact</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'student_test_list' %}" class="flex items-center gap-2 mt-2 px-3 py-2.5 rounded-lg bg-ksGold/15 text-ksGold border border-ksGold/40 font-bold">
+                        <i class="fa-solid fa-pen-to-square"></i> Explore Tests
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'student_test_list' %}" class="flex items-center gap-2 mt-2 px-3 py-2.5 rounded-lg bg-ksGold/15 text-ksGold border border-ksGold/40 font-bold">
+                        <i class="fa-solid fa-pen-to-square"></i> Explore Tests
+                    </a>
+                {% endif %}
+
+                <div class="border-t border-ksBorder my-3"></div>
+
+                {% if user.is_authenticated %}
+                    {% if user.role == 'teacher' or user.is_staff %}
+                        <a href="{% url 'teacher_dashboard' %}" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-amber-500 text-ksDark font-bold">
+                            <i class="fa-solid fa-chalkboard-user"></i> Dashboard
+                        </a>
+                    {% endif %}
+                    <div class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-ksCard border border-ksBorder mt-2">
+                        <i class="fa-solid fa-circle-user text-ksGold"></i>
+                        <span class="text-xs font-bold text-slate-200">{{ user.full_name }}
+                            <span class="ml-1 bg-ksBorder text-slate-400 px-1.5 py-0.5 rounded capitalize text-[10px]">{{ user.role }}</span>
+                        </span>
+                    </div>
+                    <a href="{% url 'logout' %}" class="block text-center mt-2 px-3 py-2.5 rounded-lg bg-red-600 text-white font-semibold">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="block px-3 py-2.5 rounded-lg hover:bg-ksCard hover:text-ksGold">Login</a>
+                    <a href="{% url 'register' %}" class="block text-center mt-2 px-3 py-2.5 rounded-lg bg-ksGold text-ksDark font-semibold">Register</a>
+                    <a href="{% url 'login' %}?role=teacher" class="block text-center mt-2 px-3 py-2.5 rounded-lg border border-ksGold text-ksGold font-semibold">
+                        Teacher Portal
+                    </a>
+                {% endif %}
+            </div>
+        </div>
     </header>
 
     {% block content %}{% endblock %}
@@ -170,6 +219,30 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('mobileMenuIcon');
+            menu.classList.toggle('hidden');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        }
+
+        // Close mobile menu when a link inside it is clicked
+        document.addEventListener('DOMContentLoaded', function () {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                menu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        menu.classList.add('hidden');
+                        document.getElementById('mobileMenuIcon').classList.add('fa-bars');
+                        document.getElementById('mobileMenuIcon').classList.remove('fa-xmark');
+                    });
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
